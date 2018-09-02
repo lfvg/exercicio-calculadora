@@ -2,12 +2,115 @@ package br.ufpe.cin.if710.calculadora
 
 import android.app.Activity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
-
+    var exp = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        btn_0.setOnClickListener({
+            exp += "0"
+            text_calc.setText(exp)
+        })
+        btn_1.setOnClickListener({
+            exp += "1"
+            text_calc.setText(exp)
+        })
+        btn_2.setOnClickListener({
+            exp += "2"
+            text_calc.setText(exp)
+        })
+        btn_3.setOnClickListener({
+            exp += "3"
+            text_calc.setText(exp)
+        })
+        btn_4.setOnClickListener({
+            exp += "4"
+            text_calc.setText(exp)
+        })
+        btn_5.setOnClickListener({
+            exp += "5"
+            text_calc.setText(exp)
+        })
+        btn_6.setOnClickListener({
+            exp += "6"
+            text_calc.setText(exp)
+        })
+        btn_7.setOnClickListener({
+            exp += "7"
+            text_calc.setText(exp)
+        })
+        btn_8.setOnClickListener({
+            exp += "8"
+            text_calc.setText(exp)
+        })
+        btn_9.setOnClickListener({
+            exp += "9"
+            text_calc.setText(exp)
+        })
+        btn_Multiply.setOnClickListener({
+            exp += "*"
+            text_calc.setText(exp)
+        })
+        btn_Subtract.setOnClickListener({
+            exp += "-"
+            text_calc.setText(exp)
+        })
+        btn_Dot.setOnClickListener({
+            exp += "."
+            text_calc.setText(exp)
+        })
+        btn_Add.setOnClickListener({
+            exp += "+"
+            text_calc.setText(exp)
+        })
+        btn_LParen.setOnClickListener({
+            exp += "("
+            text_calc.setText(exp)
+        })
+        btn_RParen.setOnClickListener({
+            exp += ")"
+            text_calc.setText(exp)
+        })
+        btn_Power.setOnClickListener({
+            exp += "^"
+            text_calc.setText(exp)
+        })
+        btn_Divide.setOnClickListener({
+            exp += "/"
+            text_calc.setText(exp)
+        })
+        btn_Clear.setOnClickListener({
+            exp = ""
+            text_info.text = ""
+            text_calc.setText("")
+        })
+        btn_Equal.setOnClickListener({
+            try {
+                var resultado = eval(exp)
+                text_info.text = resultado.toString()
+            }catch (e: RuntimeException){
+                //inserir codigo para jogar um toast
+            }
+
+        })
+
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString("INFO", text_info.text.toString())
+        outState?.putString("EXP", exp)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        exp = savedInstanceState?.getString("EXP")!!
+        text_calc.setText(exp)
+        text_info.text = savedInstanceState.getString("INFO")
+
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     //Como usar a função:
