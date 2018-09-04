@@ -3,108 +3,105 @@ package br.ufpe.cin.if710.calculadora
 import android.app.Activity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : Activity() {
+    //variavel que armazena a expressao
     var exp = ""
+    //funcao para atualizar a expressao e o que eh exibido na view 'text_calc'
+    fun updateExp(n: String){
+        exp += n
+        text_calc.setText(exp)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btn_0.setOnClickListener({
-            exp += "0"
-            text_calc.setText(exp)
+        //todos os botoes que nao sao '=' ou 'C' chamam a funcao updateExp passando
+        //cada um a sua respectiva modificacao
+         btn_0.setOnClickListener({
+            updateExp("0")
         })
         btn_1.setOnClickListener({
-            exp += "1"
-            text_calc.setText(exp)
+            updateExp("1")
         })
         btn_2.setOnClickListener({
-            exp += "2"
-            text_calc.setText(exp)
+            updateExp("2")
         })
         btn_3.setOnClickListener({
-            exp += "3"
-            text_calc.setText(exp)
+            updateExp("3")
         })
         btn_4.setOnClickListener({
-            exp += "4"
-            text_calc.setText(exp)
+            updateExp("4")
         })
         btn_5.setOnClickListener({
-            exp += "5"
-            text_calc.setText(exp)
+            updateExp("5")
         })
         btn_6.setOnClickListener({
-            exp += "6"
-            text_calc.setText(exp)
+            updateExp("6")
         })
         btn_7.setOnClickListener({
-            exp += "7"
-            text_calc.setText(exp)
+            updateExp("7")
         })
         btn_8.setOnClickListener({
-            exp += "8"
-            text_calc.setText(exp)
+            updateExp("8")
         })
         btn_9.setOnClickListener({
-            exp += "9"
-            text_calc.setText(exp)
+            updateExp("9")
         })
         btn_Multiply.setOnClickListener({
-            exp += "*"
-            text_calc.setText(exp)
+            updateExp("*")
         })
         btn_Subtract.setOnClickListener({
-            exp += "-"
-            text_calc.setText(exp)
+            updateExp("-")
         })
         btn_Dot.setOnClickListener({
-            exp += "."
-            text_calc.setText(exp)
+            updateExp(".")
         })
         btn_Add.setOnClickListener({
-            exp += "+"
-            text_calc.setText(exp)
+            updateExp("+")
         })
         btn_LParen.setOnClickListener({
-            exp += "("
-            text_calc.setText(exp)
+            updateExp("(")
         })
         btn_RParen.setOnClickListener({
-            exp += ")"
-            text_calc.setText(exp)
+            updateExp(")")
         })
         btn_Power.setOnClickListener({
-            exp += "^"
-            text_calc.setText(exp)
+            updateExp("^")
         })
         btn_Divide.setOnClickListener({
-            exp += "/"
-            text_calc.setText(exp)
+            updateExp("/")
         })
+        //o botao de clear limpa a variavel exp e o texto nas views 'text_info' e 'text_calc'
         btn_Clear.setOnClickListener({
             exp = ""
             text_info.text = ""
             text_calc.setText("")
         })
+        //o botao de igual da um 'try' na funcao 'eval' passando a variavel 'exp' como parametro
+        //e pega um 'RuntimeException' que eh jogado por 'eval' se a expressao estiver mal formatada
+        //jogano um toast com a mensagem do erro
         btn_Equal.setOnClickListener({
             try {
                 var resultado = eval(exp)
                 text_info.text = resultado.toString()
             }catch (e: RuntimeException){
-                //inserir codigo para jogar um toast
+                toast(e.message!!)
             }
 
         })
 
 
     }
-
+    //override da funcao 'onSaveInstanceState' para armazenar os valores da variavel 'exp' e da view
+    // 'text_info'
     override fun onSaveInstanceState(outState: Bundle?) {
         outState?.putString("INFO", text_info.text.toString())
         outState?.putString("EXP", exp)
         super.onSaveInstanceState(outState)
     }
-
+    //override da funcao 'onRestoreInstanceState' para restaurar os valores da variavel 'exp' e das
+    //views 'text_calc' e 'text_info'
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         exp = savedInstanceState?.getString("EXP")!!
         text_calc.setText(exp)
